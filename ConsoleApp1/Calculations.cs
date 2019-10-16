@@ -9,31 +9,37 @@ namespace Calculations
 
     public class Matrix3
     {
-        public float x1, x2, x3, y1, y2, y3, t1, t2, t3;
+        public float x1, x2, x3, y1, y2, y3, z1, z2, z3;
         public Matrix3(float one, float two, float three, float four, float five, float six, float seven, float eight, float nine)
         {
             x1 = one; x2 = two; x3 = three;
             y1 = four; y2 = five; y3 = six;
-            t1 = seven; t2 = eight; t3 = nine;
+            z1 = seven; z2 = eight; z3 = nine;
+        }
+        public Matrix3(Matrix3 m)
+        {
+            x1 = m.x1; x2 = m.x2; x3 = m.x3;
+            y1 = m.y1; y2 = m.y2; y3 = m.y3;
+            z1 = m.z1; z2 = m.z2; z3 = m.z3;
         }
         public Matrix3()
         {
             x1 = 1; x2 = 0; x3 = 0;
             y1 = 0; y2 = 1; y3 = 0;
-            t1 = 0; t2 = 0; t3 = 1;
+            z1 = 0; z2 = 0; z3 = 1;
         }
         public static Matrix3 operator *(Matrix3 m1, Matrix3 m2)
         {
             Matrix3 m3 = new Matrix3();
-            m3.x1 = (m1.x1 * m2.x1) + (m1.x2 * m2.y1) + (m1.x3 * m2.t1);
-            m3.x2 = (m1.x1 * m2.x2) + (m1.x2 * m2.y2) + (m1.x3 * m2.t2);
-            m3.x3 = (m1.x1 * m2.x3) + (m1.x2 * m2.y3) + (m1.x3 * m2.t3);
-            m3.y1 = (m1.y1 * m2.x1) + (m1.y2 * m2.y1) + (m1.y3 * m2.t1);
-            m3.y2 = (m1.y1 * m2.x2) + (m1.y2 * m2.y2) + (m1.y3 * m2.t2);
-            m3.y3 = (m1.y1 * m2.x3) + (m1.y2 * m2.y3) + (m1.y3 * m2.t3);
-            m3.t1 = (m1.t1 * m2.x1) + (m1.t2 * m2.y1) + (m1.t3 * m2.t1);
-            m3.t2 = (m1.t1 * m2.x2) + (m1.t2 * m2.y2) + (m1.t3 * m2.t2);
-            m3.t3 = (m1.t1 * m2.x3) + (m1.t2 * m2.y3) + (m1.t3 * m2.t3);
+            m3.x1 = (m1.x1 * m2.x1) + (m1.x2 * m2.y1) + (m1.x3 * m2.z1);
+            m3.x2 = (m1.x1 * m2.x2) + (m1.x2 * m2.y2) + (m1.x3 * m2.z2);
+            m3.x3 = (m1.x1 * m2.x3) + (m1.x2 * m2.y3) + (m1.x3 * m2.z3);
+            m3.y1 = (m1.y1 * m2.x1) + (m1.y2 * m2.y1) + (m1.y3 * m2.z1);
+            m3.y2 = (m1.y1 * m2.x2) + (m1.y2 * m2.y2) + (m1.y3 * m2.z2);
+            m3.y3 = (m1.y1 * m2.x3) + (m1.y2 * m2.y3) + (m1.y3 * m2.z3);
+            m3.z1 = (m1.z1 * m2.x1) + (m1.z2 * m2.y1) + (m1.z3 * m2.z1);
+            m3.z2 = (m1.z1 * m2.x2) + (m1.z2 * m2.y2) + (m1.z3 * m2.z2);
+            m3.z3 = (m1.z1 * m2.x3) + (m1.z2 * m2.y3) + (m1.z3 * m2.z3);
             return m3;
         }
         public static Matrix3 operator +(Matrix3 m1, Matrix3 m2)
@@ -45,9 +51,9 @@ namespace Calculations
             x3.y1 = (m1.y1 + m2.y1);
             x3.y2 = (m1.y2 + m2.y2);
             x3.y3 = (m1.y3 + m2.y3);
-            x3.t1 = (m1.t1 + m2.t1);
-            x3.t2 = (m1.t2 + m2.t2);
-            x3.t3 = (m1.t3 + m2.t3);
+            x3.z1 = (m1.z1 + m2.z1);
+            x3.z2 = (m1.z2 + m2.z2);
+            x3.z3 = (m1.z3 + m2.z3);
             return x3;
         }
         public static Matrix3 operator -(Matrix3 m1, Matrix3 m2)
@@ -59,9 +65,9 @@ namespace Calculations
             m3.y1 = (m1.y1 - m2.y1);
             m3.y2 = (m1.y2 - m2.y2);
             m3.y3 = (m1.y3 - m2.y3);
-            m3.t1 = (m1.t1 - m2.t1);
-            m3.t2 = (m1.t2 - m2.t2);
-            m3.t3 = (m1.t3 - m2.t3);
+            m3.z1 = (m1.z1 - m2.z1);
+            m3.z2 = (m1.z2 - m2.z2);
+            m3.z3 = (m1.z3 - m2.z3);
             return m3;
         }
         public static Matrix3 Matrix3Transpose(Matrix3 m1)
@@ -69,13 +75,13 @@ namespace Calculations
             Matrix3 m2 = new Matrix3();
             m2.x1 = m1.x1;
             m2.x2 = m1.y1;
-            m2.x3 = m1.t1;
+            m2.x3 = m1.z1;
             m2.y1 = m1.x2;
             m2.y2 = m1.y2;
-            m2.y3 = m1.t2;
-            m2.t1 = m1.x3;
-            m2.t2 = m1.y3;
-            m2.t3 = m1.t3;
+            m2.y3 = m1.z2;
+            m2.z1 = m1.x3;
+            m2.z2 = m1.y3;
+            m2.z3 = m1.z3;
             return m2;
         }
         public void SetTranslation(float x, float y)
@@ -96,13 +102,13 @@ namespace Calculations
         {
             x1 = v.x; x2 = 0; x3 = 0;
             y1 = 0; y2 = v.y; y3 = 0;
-            t1 = 0; t2 = 0; t3 = v.z;
+            z1 = 0; z2 = 0; z3 = v.z;
         }
         public void SetScaled(float x, float y, float z)
         {
             x1 = x; x2 = 0; x3 = 0;
             y1 = 0; y2 = y; y3 = 0;
-            t1 = 0; t2 = 0; t3 = z;
+            z1 = 0; z2 = 0; z3 = z;
         }
         public void Set(Matrix3 m)
         {
@@ -112,9 +118,9 @@ namespace Calculations
             y1 = m.y1;
             y2 = m.y2;
             y3 = m.y3;
-            t1 = m.t1;
-            t2 = m.t2;
-            t3 = m.t3;
+            z1 = m.z1;
+            z2 = m.z2;
+            z3 = m.z3;
         }
 
         public void Scale(Vector3 v)
@@ -188,7 +194,36 @@ namespace Calculations
         {
 
         }
-
+        public static Vector3 operator *(Vector3 v1, float x)
+        {
+            return new Vector3(1, 2, 3);
+        }
+        public static Vector3 operator +(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(
+            v1.x + v2.x,
+            v1.y + v2.y,
+            v1.z + v2.z);
+        }
+        public static Vector3 operator -(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(
+            v1.x - v2.x,
+            v1.y - v2.y,
+            v1.z - v2.z);
+        }
+        public static Vector3 Clamp(Vector3 t, Vector3 a, Vector3 b)
+        {
+            return Max(a, Min(b, t));
+        }
+        public static Vector3 Min(Vector3 a, Vector3 b)
+        {
+            return new Vector3(Math.Min(a.x, b.x), Math.Min(a.y, b.y), Math.Min(a.z, b.z));
+        }
+        public static Vector3 Max(Vector3 a, Vector3 b)
+        {
+            return new Vector3(Math.Max(a.x, b.x), Math.Max(a.y, b.y), Math.Max(a.z, b.z));
+        }
     }
 
 }

@@ -14,6 +14,15 @@ namespace TankGame
         public Calculations.Matrix3 Transforms;
         public float bulletLifeTime;
     }
+    struct EnemyTank
+    {
+        public SceneObject EnemyBody;
+        public SceneObject EnemyTurret;
+        public SceneObject EnemyBulletSpawn;
+        public SpriteObject EnemyBodyText;
+        public SpriteObject EnemyTurretText;
+        
+    }
     struct AmmoPack
     {
         public Vector2 location;
@@ -35,6 +44,7 @@ namespace TankGame
 
         Stopwatch stopwatch = new Stopwatch();
 
+        //Initlizing all of the variables that will be used in the game.
         private long currentTime = 0;
         private long lastTime = 0;
         private float timer = 0;
@@ -47,11 +57,18 @@ namespace TankGame
         int ammo = 100;
         float AmmoPackSpawn = 60;
         float AmmoPackTimer = 0;
+        //Number of player bullets in the air.
         public int BulletCount = 0;
+        //Number of enemy bullets in the air.
+        public int EnemyBulletCount = 0;
+        //Number of ammopacks in the game.
         public int AmmoPackCounter = 0;
+        //number of enemys alive.
+        public int NumberOfEnemys = 0;
         Bullet[] bullet = new Bullet[10000];
+        Bullet[] EnemyBullets = new Bullet[10000];
         AmmoPack[] ammopack = new AmmoPack[1000];
-
+        AABB aabb = new AABB();
 
         public void Init()
         {
@@ -210,12 +227,28 @@ namespace TankGame
             DrawText(ammo.ToString(), 50, GetScreenHeight()-100, 100, Color.GREEN);
             for (int i = 0; i < BulletCount; i++)
             {
+                AABB hitbox = new AABB(new Calculations.Vector3(bullet[i].Transforms.x1, bullet[i].Transforms.x2, bullet[i].Transforms.x3), 
+                                       new Calculations.Vector3(bullet[i].Transforms.y1, bullet[i].Transforms.y2, bullet[i].Transforms.y3));
                 float rotation = (float)Math.Atan2(bullet[i].Transforms.y1, bullet[i].Transforms.x1);
                 DrawTextureEx(bulletText, new Vector2(bullet[i].Transforms.x3, bullet[i].Transforms.y3), (rotation * (float)(180.0f / Math.PI)) + 90, .5f, Color.GRAY);
                 bullet[i].Transforms.x3 += 400 * bullet[i].Transforms.x1 * deltaTime;
                 bullet[i].Transforms.y3 += 400 * bullet[i].Transforms.y1 * deltaTime;
-                Rectangle hitbox = new Rectangle((int)(bullet[i].Transforms.x3), (int)(bullet[i].Transforms.y3), bulletText.width, bulletText.height);
-                DrawRectangleLinesEx(hitbox, 1, Color.RED);
+                aabb.SetToTransformedBox(hitbox, bullet[i].Transforms);
+                List<Calculations.Vector3> HitBoxCorners = new List<Calculations.Vector3>(4);
+                 HitBoxCorners = hitbox.Corners();
+                for (int x = 0; x < HitBoxCorners.Count; x++)
+                {
+                    int count = 0;
+                    if (count != 3)
+                    {
+                        count = x;
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
+                    DrawLineEx(new Vector2(HitBoxCorners[x].x, HitBoxCorners[x].y), new Vector2(HitBoxCorners[count].x, HitBoxCorners[count].y), 5, Color.RED);
+                }
                 if (bullet[i].Transforms.x3 > GetScreenWidth())
                 {
                     bullet[i].Transforms.x3 = 0;
