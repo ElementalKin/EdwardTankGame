@@ -28,6 +28,11 @@ namespace Calculations
             y1 = 0; y2 = 1; y3 = 0;
             z1 = 0; z2 = 0; z3 = 1;
         }
+
+        public Matrix3(Random random)
+        {
+        }
+
         public static Matrix3 operator *(Matrix3 m1, Matrix3 m2)
         {
             Matrix3 m3 = new Matrix3();
@@ -193,6 +198,10 @@ namespace Calculations
         public Vector3(Vector3 Vector3)
         {
 
+        }
+        public Vector3()
+        {
+            x = 0; y = 0; z = 0;
         }
         public static Vector3 operator *(Vector3 v1, float x)
         {

@@ -7,11 +7,13 @@ namespace TankGame
 {
     class AABB
     {
-        Vector3 min = new Vector3(float.NegativeInfinity,
+        Vector3 min = new Vector3
+       (float.NegativeInfinity,
         float.NegativeInfinity,
         float.NegativeInfinity);
-        Vector3 max = new Vector3(float.PositiveInfinity,
-       float.PositiveInfinity,
+        Vector3 max = new Vector3
+       (float.PositiveInfinity,
+        float.PositiveInfinity,
         float.PositiveInfinity);
         public AABB()
         {
@@ -34,11 +36,11 @@ namespace TankGame
         public List<Vector3> Corners()
         {
             // ignoring z axis for 2D
-            List<Vector3> corners = new List<Vector3>(4);
-            corners[0] = min;
-            corners[1] = new Vector3(min.x, max.y, min.z);
-            corners[2] = max;
-            corners[3] = new Vector3(max.x, min.y, min.z);
+            List<Vector3> corners = new List<Vector3>();
+            corners.Add(min);
+            corners.Add(new Vector3(min.x, max.y, min.z));
+            corners.Add(max);
+            corners.Add(new Vector3(max.x, min.y, min.z));
             return corners;
         }
         public void Fit(List<Vector3> points)
@@ -120,6 +122,9 @@ namespace TankGame
             }
             // Examine each of the nine matrix elements
             // and compute the new AABB
+            //Vector3 min = new Vector3();
+            //Vector3 max = new Vector3();
+
             if (m.x1 > 0.0f) // x1 = x11 in the formula above
             {
                 min.x += m.x1 * box.min.x; max.x += m.x1 * box.max.x;
@@ -130,30 +135,30 @@ namespace TankGame
             }
             if (m.x2 > 0.0f) // x2 = x12 in the formula above
             {
-                min.x += m.x2 * box.min.x; max.x += m.x2 * box.max.x;
+                min.y += m.x2 * box.min.x; max.y += m.x2 * box.max.x;
             }
             else
             {
-                min.x += m.x2 * box.max.x; max.x += m.x2 * box.min.x;
+                min.y += m.x2 * box.max.x; max.y += m.x2 * box.min.x;
             }
             if (m.x3 > 0.0f) // x3 = x13 in the formula above
             {
-                min.x += m.x3 * box.min.x; max.x += m.x3 * box.max.x;
+                min.z += m.x3 * box.min.x; max.z += m.x3 * box.max.x;
             }
             else
             {
-                min.x += m.x3 * box.max.x; max.x += m.x3 * box.min.x;
+                min.z += m.x3 * box.max.x; max.z += m.x3 * box.min.x;
             }
 
-            if (m.y1 > 0.0f) // y1 = x11 in the formula above
+            if (m.y1 > 0.0f) // y1 = y11 in the formula above
             {
-                min.y += m.y1 * box.min.y; max.y += m.y1 * box.max.y;
+                min.x += m.y1 * box.min.y; max.x += m.y1 * box.max.y;
             }
             else
             {
-                min.y += m.y1 * box.max.y; max.y += m.y1 * box.min.y;
+                min.x += m.y1 * box.max.y; max.x += m.y1 * box.min.y;
             }
-            if (m.y2 > 0.0f) // y2 = x12 in the formula above
+            if (m.y2 > 0.0f) // y2 = y12 in the formula above
             {
                 min.y += m.y2 * box.min.y; max.y += m.y2 * box.max.y;
             }
@@ -161,39 +166,43 @@ namespace TankGame
             {
                 min.y += m.y2 * box.max.y; max.y += m.y2 * box.min.y;
             }
-            if (m.y3 > 0.0f) // y3 = x13 in the formula above
+            if (m.y3 > 0.0f) // y3 = y13 in the formula above
             {
-                min.y += m.y3 * box.min.y; max.y += m.y3 * box.max.y;
+                min.z += m.y3 * box.min.y; max.z += m.y3 * box.max.y;
             }
             else
             {
-                min.y += m.y3 * box.max.y; max.y += m.y3 * box.min.y;
+                min.z += m.y3 * box.max.y; max.z += m.y3 * box.min.y;
             }
 
-            if (m.y1 > 0.0f) // y1 = x11 in the formula above
+            if (m.z1 > 0.0f) // z1 = z11 in the formula above
             {
-                min.z += m.y1 * box.min.z; max.z += m.y1 * box.max.z;
+                min.x += m.z1 * box.min.z; max.x += m.z1 * box.max.z;
             }
             else
             {
-                min.z += m.y1 * box.max.z; max.z += m.y1 * box.min.z;
+                min.x += m.z1 * box.max.z; max.x += m.z1 * box.min.z;
             }
-            if (m.y2 > 0.0f) // y2 = x12 in the formula above
+            if (m.z2 > 0.0f) // y2 = z12 in the formula above
             {
-                min.z += m.y2 * box.min.z; max.z += m.y2 * box.max.z;
+                min.y += m.z2 * box.min.z; max.y += m.z2 * box.max.z;
             }
             else
             {
-                min.z += m.y2 * box.max.z; max.z += m.y2 * box.min.z;
+                min.y += m.z2 * box.max.z; max.y += m.z2 * box.min.z;
             }
-            if (m.y3 > 0.0f) // y3 = x13 in the formula above
+            if (m.z3 > 0.0f) // x3 = z13 in the formula above
             {
-                min.z += m.y3 * box.min.z; max.z += m.y3 * box.max.z;
+                min.z += m.z3 * box.min.z; max.z += m.z3 * box.max.z;
             }
             else
             {
-                min.z += m.y3 * box.max.z; max.z += m.y3 * box.min.z;
+                min.z += m.z3 * box.max.z; max.z += m.z3 * box.min.z;
             }
+
+            //box.min = min;
+            //box.max = max;
+
             // Continue like this for the remaining 6 matrix values
         }
     }
