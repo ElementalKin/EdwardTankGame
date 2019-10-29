@@ -93,7 +93,6 @@ C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\re
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel2_outline.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel3.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel3_outline.png
-C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel4.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel4_outline.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel5.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel5_outline.png
@@ -199,7 +198,6 @@ C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\re
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\tracksSmall.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeBrown_large.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeBrown_leaf.png
-C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeBrown_small.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeBrown_twigs.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeGreen_large.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\treeGreen_leaf.png
@@ -209,3 +207,5 @@ C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\re
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\wireStraight.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\tankGreen_Double1.png
 C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\AmmoPack.png
+C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\specialBarrel4Green.png
+C:\Users\s199102\source\repos\MatrixStuff\ConsoleApp1\bin\Debug\netcoreapp2.0\resources\Target.png

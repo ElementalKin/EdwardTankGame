@@ -236,7 +236,7 @@
     <None Update="resources\specialBarrel3_outline.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resources\specialBarrel4.png">
+    <None Update="resources\specialBarrel4Green.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="resources\specialBarrel4_outline.png">
@@ -560,7 +560,7 @@
     <None Update="resources\treeBrown_leaf.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resources\treeBrown_small.png">
+    <None Update="resources\Target.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="resources\treeBrown_twigs.png">
