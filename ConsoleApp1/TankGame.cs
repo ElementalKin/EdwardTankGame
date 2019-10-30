@@ -125,7 +125,7 @@ namespace TankGame
         Bullet[] bullet = new Bullet[10000];
         Bullet[] EnemyBullets = new Bullet[10000];
         AmmoPack[] ammopack = new AmmoPack[100000];
-        Target[] target = new Target[1000];
+        Target[] target = new Target[10000];
         //Making all the hit boxes variables.
         public Calculations.Vector3 TankAABBHitBoxMin;
         public Calculations.Vector3 TankAABBHitBoxMax;
