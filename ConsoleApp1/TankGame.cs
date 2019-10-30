@@ -10,15 +10,24 @@ using AABB;
 
 namespace TankGame
 {
+    /// <summary>
+    /// The struct for the bullets.
+    /// </summary>
     struct Bullet
     {
+        //the Matrix3 that is used for placing and moving the bullet.
         public Calculations.Matrix3 Transforms;
-        public Calculations.Matrix3 Transforms2;
+        //The bullets size so I can change it for the diffrent barrels.
         public float bulletSize;
+        //How long the bullet will remain in the game.
         public float bulletLifeTime;
     }
+    /// <summary>
+    /// The enemy tank I was going to try and use if I had time.
+    /// </summary>
     struct EnemyTank
     {
+        //The parts of the enemy tank.
         public SceneObject EnemyBody;
         public SceneObject EnemyTurret;
         public SceneObject EnemyBulletSpawn;
@@ -26,17 +35,25 @@ namespace TankGame
         public SpriteObject EnemyTurretText;
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     struct AmmoPack
     {
         public Calculations.Matrix3 location;
     }
+    /// <summary>
+    /// The Target struct.
+    /// </summary>
     struct Target
     {
+        //The targets location
         public Calculations.Matrix3 location;
     }
 
     class Game
     {
+        //All the sceneObjects, SpriteObjects, and Textures with a Camera I was trying to mess with.
         public static SceneObject tankObject = new SceneObject();
         public static SceneObject tankAABB = new SceneObject();
         public static SceneObject tankAABB2 = new SceneObject();
@@ -58,48 +75,69 @@ namespace TankGame
         //Initlizing all of the variables that will be used in the game.
         private long currentTime = 0;
         private long lastTime = 0;
+        //Timer
         private float timer = 0;
+        //Your FPS.
         private int fps = 1;
+        //Your frames.
         private int frames;
+        //DeltaTime.
         private float deltaTime = 0.005f;
+        //How long the reload should be. 
         float reloadSpeed = .2f;
+        //how long untill you can shoot again.
         float reload = 0;
+        //The speed of the bullet.
         public float bulletSpeed = 400;
+        //saving the current speed of the bullet.
         float bulletSpeedSaved = 0;
+        //How fast you rotate.
         float RotateSpeed = 1;
+        //How much the change in the bullet should be.
         int SpeedChange = 100;
+        //What barrel you are using.
         int barrel = 0;
+        //What turret you currently have.
         int CurrentTurret = 0;
+        //How much ammo you have.
         int ammo = 1000;
+        //how long it should take for a Ammopack to spawn.
         float AmmoPackSpawn = 15;
+        //How lomng untll the next ammo pack should spawn.
         float AmmoPackTimer = 0;
-        float TargetPackSpawn = 3;
+        //how long it should take for a target to spawn.
+        float TargetSpawnTime = 3;
+        //How long untill the next target spawns
         float TargetTimer = 0;
+        //The bullet width for the bullets size(since it changes with the turret type).
         public static float BulletWidth = 0.5f;
         //Number of player bullets in the air.
         public int BulletCount = 0;
-        //Number of enemy bullets in the air.
+        //Number of enemy bullets in the air(WIP).
         public int EnemyBulletCount = 0;
         //Number of ammopacks in the game.
         public int AmmoPackCounter = 0;
-        //number of enemys alive.
+        //Number of enemys alive(WIP).
         public int NumberOfEnemys = 0;
+        //Used for loading the diffrent barrel types.
         public string[] Turrets = new string[5] { "resources/tankGreen_Double1.png", "resources/specialBarrel4Green.png", "resources/tankGreen_barrel2.png", "resources/tankGreen_barrel2_outline.png", "resources/tankGreen_barrel3.png" };
+        //All the arrays for the bullets, enemybullets(WIP), Ammopacks, and targets.
         Bullet[] bullet = new Bullet[10000];
         Bullet[] EnemyBullets = new Bullet[10000];
         AmmoPack[] ammopack = new AmmoPack[100000];
         Target[] target = new Target[1000];
-        public Calculations.Vector3 BulletAABBHitBoxMin;
-        public Calculations.Vector3 BulletAABBHitBoxMax;
+        //Making all the hit boxes variables.
         public Calculations.Vector3 TankAABBHitBoxMin;
         public Calculations.Vector3 TankAABBHitBoxMax;
         public Calculations.Vector3 AmmoAABBHitBoxMin;
         public Calculations.Vector3 AmmoAABBHitBoxMax;
         float AmmoPackCenter = 18;
         float TankCenter = 18;
+        //How many Targets there are.
         int Targetcount = 0;
         public void Init()
         {
+            //Initilizes(sets its position and rotation in center of the screen) the tank and all of its sprites.
             stopwatch.Start();
             lastTime = stopwatch.ElapsedMilliseconds;
             tankSprite.Load("resources/tankBody_green.png");
@@ -132,6 +170,7 @@ namespace TankGame
             AmmoPack = LoadTextureFromImage(LoadImage("resources/AmmoPack.png"));
             BulletExplosion = LoadTextureFromImage(LoadImage("resources/explosion2.png"));
             TargetText = LoadTextureFromImage(LoadImage("resources/Target.png"));
+            //Messing with camera. (Didn't figure out how to use it and I didnt have time to spare to actually do any research into how to use it.)
             camera.target = new Vector2(tankObject.GlobalTransform.x3 + 20, tankObject.GlobalTransform.y3 + 20);
             camera.offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
             camera.zoom = 10000f;
@@ -140,6 +179,9 @@ namespace TankGame
 
         public void Shutdown()
         { }
+        /// <summary>
+        /// Updates all the stuff if things happen.
+        /// </summary>
         public void Update()
         {
             BulletSpawn.SetPosition(turretSprite.Height, -10);
@@ -157,6 +199,7 @@ namespace TankGame
                 timer -= 1;
             }
             frames++;
+            //Movement.
             if (IsKeyPressed(KeyboardKey.KEY_F))
             {
                 if (CurrentTurret == 0)
@@ -235,6 +278,7 @@ namespace TankGame
             {
                 turretObject.Rotate(RotateSpeed * deltaTime);
             }
+            //used for changing the tanks turn and move speed for testing reasons
             if (IsKeyDown(KeyboardKey.KEY_LEFT_CONTROL))
             {
                 RotateSpeed = 2;
@@ -243,6 +287,7 @@ namespace TankGame
             {
                 RotateSpeed = 1;
             }
+            //used to help controll the bullet speed changing.
             if (IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
             {
                 SpeedChange = 10;
@@ -251,21 +296,23 @@ namespace TankGame
             {
                 SpeedChange = 100;
             }
+            //Used for shooting.
             if (IsKeyDown(KeyboardKey.KEY_SPACE))
             {
+                //Checks to make sure you have ammo.
                 if (ammo > 0)
                 {
-
+                    //Checks to see if the tank is still reloading a shell.
                     if (reload <= 0)
                     {
+                        //this part of the code is to check if you are on the dual turret or not since the dual barrel turret act diffrently
                         if (CurrentTurret == 0)
                         {
+                            //switches between the barrels
                             if (barrel == 0)
                             {
+                                //makes the bullet and sets all of its variables
                                 bullet[BulletCount].Transforms = (BulletSpawn.GlobalTransform);
-                                bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
-                                                                                                                         0, 0, bulletText.height,
-                                                                                                                         0, 0, 0));
                                 bullet[BulletCount].bulletLifeTime = 1000;
                                 bullet[BulletCount].bulletSize = BulletWidth;
                                 BulletCount++;
@@ -276,9 +323,6 @@ namespace TankGame
                             else
                             {
                                 bullet[BulletCount].Transforms = BulletSpawn2.GlobalTransform;
-                                bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
-                                                                                         0, 0, bulletText.height,
-                                                                                         0, 0, 0));
                                 bullet[BulletCount].bulletLifeTime = 1000;
                                 bullet[BulletCount].bulletSize = BulletWidth;
                                 BulletCount++;
@@ -290,9 +334,6 @@ namespace TankGame
                         else
                         {
                             bullet[BulletCount].Transforms = (BulletSpawn2.GlobalTransform);
-                            bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
-                                                                                         0, 0, bulletText.height,
-                                                                                         0, 0, 0));
                             bullet[BulletCount].bulletLifeTime = 1000;
                             bullet[BulletCount].bulletSize = BulletWidth;
                             BulletCount++;
@@ -302,19 +343,23 @@ namespace TankGame
                     }
                 }
             }
+            //used to increase the speed of the bullets for testing reasons
             if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 bulletSpeed += SpeedChange;
             }
+            //used to decrease the speed of the bullets for testing reasons
             if (IsMouseButtonPressed(MouseButton.MOUSE_RIGHT_BUTTON))
             {
                 bulletSpeed -= SpeedChange;
             }
+            //used to pause the speed of the bullets for testing reasons
             if (IsMouseButtonPressed(MouseButton.MOUSE_MIDDLE_BUTTON))
             {
                 bulletSpeedSaved = bulletSpeed;
                 bulletSpeed = 0;
             }
+            //used to pause the speed of the bullets for testing reasons
             else if (IsMouseButtonReleased(MouseButton.MOUSE_MIDDLE_BUTTON))
             {
                 bulletSpeed = bulletSpeedSaved;
@@ -323,18 +368,22 @@ namespace TankGame
             camera.target = new Vector2(tankObject.GlobalTransform.x3 + 20, tankObject.GlobalTransform.y3 + 20);
             camera.offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
             camera.zoom = 1.0f;
+            //spawns a AmmoPack about every 15 seconds.
             if (AmmoPackTimer <= 0)
             {
                 ammopack[AmmoPackCounter].location = new Calculations.Matrix3(0, 0, GetRandomValue(0, GetScreenWidth() - 30), 0, 0, GetRandomValue(0, GetScreenHeight()- 30), 0, 0, 0);
                 AmmoPackCounter++;
                 AmmoPackTimer = AmmoPackSpawn;
             }
+            //spawns a Target about every 3 seconds.
+            //Targets currently have no sort of collision.
             if (TargetTimer <= 0)
             {
                 target[Targetcount].location = new Calculations.Matrix3(0, 0, GetRandomValue(0, GetScreenWidth() - 30), 0, 0, GetRandomValue(0, GetScreenHeight() - 30), 0, 0, 0);
                 Targetcount++;
-                TargetTimer = TargetPackSpawn;
+                TargetTimer = TargetSpawnTime;
             }
+            //Wraps the tank around the screen.
             if (tankObject.GlobalTransform.x3 > GetScreenWidth())
             {
                 tankObject.GlobalTransform.x3 = 0;
@@ -351,13 +400,17 @@ namespace TankGame
             {
                 tankObject.GlobalTransform.y3 = GetScreenHeight();
             }
-
+            //makes the values i use to make the hit box around the tank.
             TankAABBHitBoxMin = new Calculations.Vector3(tankObject.GlobalTransform.x3 - tankSprite.Width / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.x2)), tankObject.GlobalTransform.y3 - tankSprite.Height / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.y1 * tankObject.GlobalTransform.y2)), 0);
             TankAABBHitBoxMax = new Calculations.Vector3(tankSprite.Width + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.x2)), tankSprite.Height + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.y1 * tankObject.GlobalTransform.y2)), 0);
-
+            //updates the tank.
             tankObject.Update(deltaTime);
             lastTime = currentTime;
         }
+        /// <summary>
+        /// "Deletes" the bullet.
+        /// </summary>
+        /// <param name="x"></param>
         public void BulletDelete(int x)
         {
             for (int i = 0; i <= BulletCount; i++)
@@ -372,6 +425,10 @@ namespace TankGame
             }
             BulletCount--;
         }
+        /// <summary>
+        /// "Deletes" the AmmoPack.
+        /// </summary>
+        /// <param name="x"></param>
         public void AmmoPackDelete(int x)
         {
             for (int i = 0; i <= AmmoPackCounter; i++)
@@ -384,13 +441,19 @@ namespace TankGame
             }
             AmmoPackCounter--;
         }
-
+        /// <summary>
+        /// Draws all the bullets and stuff plus some math.
+        /// </summary>
         public void Draw()
         {
             BeginDrawing();
+            //makes the background.
             ClearBackground(Color.WHITE);
+            //Draws the fps.
             DrawText(fps.ToString(), 10, 10, 12, Color.RED);
+            //Draws how much ammo you have.(migh move it to the end so it draws over the bullets and such but since I couldent figure out the camera it s kinda of usless to do that.)
             DrawText(ammo.ToString(), 50, GetScreenHeight() - 100, 100, Color.GREEN);
+            //Draws the AmmoPacks at the position they are at.
             for (int i = 0; i < AmmoPackCounter; i++)
             {
                 AmmoAABBHitBoxMin = new Calculations.Vector3(ammopack[i].location.x3, ammopack[i].location.y3, 0);
@@ -426,6 +489,7 @@ namespace TankGame
                     }
                 }
             }
+            //Draws the Targets at the location they are at. (Again targets are a wip that I probably don't have time to do.)
             for (int i = 0; i < Targetcount; i++)
             {
                 DrawTextureEx(TargetText, new Vector2(target[i].location.x3, target[i].location.y3), 0, 1f, Color.WHITE);
@@ -433,20 +497,20 @@ namespace TankGame
             for (int i = 0; i < BulletCount; i++)
             {
 
-
+                //The rotation of the bullet.
                 float rotation = (float)Math.Atan2(bullet[i].Transforms.y1, bullet[i].Transforms.x1);
-                BulletAABBHitBoxMin = new Calculations.Vector3(bullet[i].Transforms.x3, bullet[i].Transforms.y3, 0);
-                BulletAABBHitBoxMax = new Calculations.Vector3(bullet[i].Transforms2.x3, bullet[i].Transforms2.y3, 0);
-                DrawLine((int)BulletAABBHitBoxMin.x, (int)BulletAABBHitBoxMin.y, (int)BulletAABBHitBoxMax.x, (int)BulletAABBHitBoxMax.y, Color.RED);
+                //The rectangle that is used in the rectanglePro.
                 //Rectangle hitBox = new Rectangle(bullet[i].Transforms.x3, bullet[i].Transforms.y3, bulletText.width / 2, bulletText.height / 2);
+                //Was messing with RectanglePro to see if I can use it for hit detection(I probably can it just isnt what the project asks for so I stopped.)
                 //DrawRectanglePro(hitBox, new Vector2(0, 0), (rotation * (float)(180.0f / Math.PI)) + 90, Color.RED);
                 DrawTextureEx(bulletText, new Vector2(bullet[i].Transforms.x3 , bullet[i].Transforms.y3), (rotation * (float)(180.0f / Math.PI)) + 90, bullet[i].bulletSize, Color.RAYWHITE);
 
+                //little blue dot for the location of the bullet. (used for testing and debugging.)
                 DrawRectangle((int)bullet[i].Transforms.x3,(int)bullet[i].Transforms.y3, 1,1, Color.BLUE);
+                //Changes the bullets position.
                 bullet[i].Transforms.x3 += bulletSpeed * bullet[i].Transforms.x1 * deltaTime;
                 bullet[i].Transforms.y3 += bulletSpeed * bullet[i].Transforms.y1 * deltaTime;
-                bullet[i].Transforms2.x3 += bulletSpeed * bullet[i].Transforms2.x1 * deltaTime;
-                bullet[i].Transforms2.y3 += bulletSpeed * bullet[i].Transforms2.y1 * deltaTime;
+                //Bullet wraping (insn't perfect offsets the bullets slightly.)
                 if (bullet[i].Transforms.x3 > GetScreenWidth())
                 {
                     bullet[i].Transforms.x3 = 0;
@@ -474,6 +538,7 @@ namespace TankGame
             DrawLine((int)TankAABBHitBoxMin.x, (int)TankAABBHitBoxMin.y + (int)TankAABBHitBoxMax.y, (int)TankAABBHitBoxMin.x + (int)TankAABBHitBoxMax.x, (int)TankAABBHitBoxMin.y + (int)TankAABBHitBoxMax.y, Color.RED);
             DrawLine((int)TankAABBHitBoxMin.x + (int)TankAABBHitBoxMax.x, (int)TankAABBHitBoxMin.y + (int)TankAABBHitBoxMax.y, (int)TankAABBHitBoxMin.x + (int)TankAABBHitBoxMax.x, (int)TankAABBHitBoxMin.y, Color.RED);
             DrawLine((int)TankAABBHitBoxMin.x + (int)TankAABBHitBoxMax.x, (int)TankAABBHitBoxMin.y, (int)TankAABBHitBoxMin.x, (int)TankAABBHitBoxMin.y, Color.RED);
+            //The old draw line.
             //for (int i = 0; i < TankHitBoxCorners.Count; i++)
             //{
             //    if (i != 3)
@@ -485,7 +550,7 @@ namespace TankGame
             //        DrawLine((int)TankHitBoxCorners[3].x, (int)TankHitBoxCorners[3].y, (int)TankHitBoxCorners[0].x, (int)TankHitBoxCorners[0].y, Color.RED);
             //    }
             //}
-
+            //Draws the tank.
             tankObject.Draw();
             EndDrawing();
         }
@@ -502,7 +567,9 @@ namespace TankGame
             game.Init();
             while (!WindowShouldClose())
             {
+                //Calls Update to do all the math and stuff for the game.
                 game.Update();
+                //Calls Draw and draws all the stuff to make the game be.
                 game.Draw();
 
             }

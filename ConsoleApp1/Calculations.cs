@@ -6,16 +6,27 @@ using System.Threading.Tasks;
 
 namespace Calculations
 {
-
+    /// <summary>
+    /// Matrix3 and all the math associated with it.
+    /// may not work with the math class test because it is horizontal instead of vertical like the math class wants.
+    /// look at the MathClass class/Namespace for all of the stuff for that.
+    /// </summary>
     public class Matrix3
     {
         public float x1, x2, x3, y1, y2, y3, z1, z2, z3;
+        /// <summary>
+        /// Makes a Matrix3 with nine variables.
+        /// </summary>
         public Matrix3(float one, float two, float three, float four, float five, float six, float seven, float eight, float nine)
         {
             x1 = one; x2 = two; x3 = three;
             y1 = four; y2 = five; y3 = six;
             z1 = seven; z2 = eight; z3 = nine;
         }
+        /// <summary>
+        /// Sets a Matrix3 to the variables of another Matrix3
+        /// </summary>
+        /// <param name="m"></param>
         public Matrix3(Matrix3 m)
         {
             x1 = m.x1; x2 = m.x2; x3 = m.x3;
@@ -188,6 +199,9 @@ namespace Calculations
             Set(z * y * x);
         }
     }
+    /// <summary>
+    /// Vector3 and all the math associated with it.
+    /// </summary>
     public class Vector3
     {
         public float x, y, z;
