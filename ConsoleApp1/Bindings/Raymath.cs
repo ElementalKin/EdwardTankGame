@@ -40,11 +40,11 @@ namespace Raylib
         [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern Vector2 Vector2One();
 
-        // Add two vectors (v1 + v2)
+        // Add two vectors (x2 + x3)
         [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern Vector2 Vector2Add(Vector2 v1, Vector2 v2);
 
-        // Subtract two vectors (v1 - v2)
+        // Subtract two vectors (x2 - x3)
         [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern Vector2 Vector2Subtract(Vector2 v1, Vector2 v2);
 

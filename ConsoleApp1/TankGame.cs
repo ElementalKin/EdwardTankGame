@@ -13,6 +13,7 @@ namespace TankGame
     struct Bullet
     {
         public Calculations.Matrix3 Transforms;
+        public Calculations.Matrix3 Transforms2;
         public float bulletSize;
         public float bulletLifeTime;
     }
@@ -131,7 +132,7 @@ namespace TankGame
             AmmoPack = LoadTextureFromImage(LoadImage("resources/AmmoPack.png"));
             BulletExplosion = LoadTextureFromImage(LoadImage("resources/explosion2.png"));
             TargetText = LoadTextureFromImage(LoadImage("resources/Target.png"));
-            camera.target = new Vector2(tankObject.GlobalTransform.z1 + 20, tankObject.GlobalTransform.z2 + 20);
+            camera.target = new Vector2(tankObject.GlobalTransform.x3 + 20, tankObject.GlobalTransform.y3 + 20);
             camera.offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
             camera.zoom = 10000f;
 
@@ -216,14 +217,14 @@ namespace TankGame
             {
                 Vector3 facing = new Vector3(
                 tankObject.LocalTransform.x1,
-                tankObject.LocalTransform.x2, 1) * RotateSpeed * deltaTime * 100;
+                tankObject.LocalTransform.y1, 1) * RotateSpeed * deltaTime * 100;
                 tankObject.Translate(facing.x, facing.y);
             }
             if (IsKeyDown(KeyboardKey.KEY_S))
             {
                 Vector3 facing = new Vector3(
                tankObject.LocalTransform.x1,
-               tankObject.LocalTransform.x2, 1) * RotateSpeed * deltaTime * -100;
+               tankObject.LocalTransform.y1, 1) * RotateSpeed * deltaTime * -100;
                 tankObject.Translate(facing.x, facing.y);
             }
             if (IsKeyDown(KeyboardKey.KEY_Q))
@@ -262,6 +263,9 @@ namespace TankGame
                             if (barrel == 0)
                             {
                                 bullet[BulletCount].Transforms = (BulletSpawn.GlobalTransform);
+                                bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
+                                                                                                                         0, 0, bulletText.height,
+                                                                                                                         0, 0, 0));
                                 bullet[BulletCount].bulletLifeTime = 1000;
                                 bullet[BulletCount].bulletSize = BulletWidth;
                                 BulletCount++;
@@ -272,6 +276,9 @@ namespace TankGame
                             else
                             {
                                 bullet[BulletCount].Transforms = BulletSpawn2.GlobalTransform;
+                                bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
+                                                                                         0, 0, bulletText.height,
+                                                                                         0, 0, 0));
                                 bullet[BulletCount].bulletLifeTime = 1000;
                                 bullet[BulletCount].bulletSize = BulletWidth;
                                 BulletCount++;
@@ -283,6 +290,9 @@ namespace TankGame
                         else
                         {
                             bullet[BulletCount].Transforms = (BulletSpawn2.GlobalTransform);
+                            bullet[BulletCount].Transforms2 = (BulletSpawn.GlobalTransform + new Calculations.Matrix3(0, 0, bulletText.width,
+                                                                                         0, 0, bulletText.height,
+                                                                                         0, 0, 0));
                             bullet[BulletCount].bulletLifeTime = 1000;
                             bullet[BulletCount].bulletSize = BulletWidth;
                             BulletCount++;
@@ -310,7 +320,7 @@ namespace TankGame
                 bulletSpeed = bulletSpeedSaved;
 
             }
-            camera.target = new Vector2(tankObject.GlobalTransform.z1 + 20, tankObject.GlobalTransform.z2 + 20);
+            camera.target = new Vector2(tankObject.GlobalTransform.x3 + 20, tankObject.GlobalTransform.y3 + 20);
             camera.offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
             camera.zoom = 1.0f;
             if (AmmoPackTimer <= 0)
@@ -325,25 +335,25 @@ namespace TankGame
                 Targetcount++;
                 TargetTimer = TargetPackSpawn;
             }
-            if (tankObject.GlobalTransform.z1 > GetScreenWidth())
+            if (tankObject.GlobalTransform.x3 > GetScreenWidth())
             {
-                tankObject.GlobalTransform.z1 = 0;
+                tankObject.GlobalTransform.x3 = 0;
             }
-            if (tankObject.GlobalTransform.z1 < -tankSprite.Width / 2.5)
+            if (tankObject.GlobalTransform.x3 < -tankSprite.Width / 2.5)
             {
-                tankObject.GlobalTransform.z1 = GetScreenWidth();
+                tankObject.GlobalTransform.x3 = GetScreenWidth();
             }
-            if (tankObject.GlobalTransform.z2 > GetScreenHeight())
+            if (tankObject.GlobalTransform.y3 > GetScreenHeight())
             {
-                tankObject.GlobalTransform.z2 = 0;
+                tankObject.GlobalTransform.y3 = 0;
             }
-            if (tankObject.GlobalTransform.z2 < -tankSprite.Height / 2.5)
+            if (tankObject.GlobalTransform.y3 < -tankSprite.Height / 2.5)
             {
-                tankObject.GlobalTransform.z2 = GetScreenHeight();
+                tankObject.GlobalTransform.y3 = GetScreenHeight();
             }
 
-            TankAABBHitBoxMin = new Calculations.Vector3(tankObject.GlobalTransform.z1 - tankSprite.Width / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.y1)), tankObject.GlobalTransform.z2 - tankSprite.Height / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.x2 * tankObject.GlobalTransform.y2)), 0);
-            TankAABBHitBoxMax = new Calculations.Vector3(tankSprite.Width + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.y1)), tankSprite.Height + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.x2 * tankObject.GlobalTransform.y2)), 0);
+            TankAABBHitBoxMin = new Calculations.Vector3(tankObject.GlobalTransform.x3 - tankSprite.Width / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.x2)), tankObject.GlobalTransform.y3 - tankSprite.Height / 2 - (TankCenter * Math.Abs(tankObject.GlobalTransform.y1 * tankObject.GlobalTransform.y2)), 0);
+            TankAABBHitBoxMax = new Calculations.Vector3(tankSprite.Width + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.x1 * tankObject.GlobalTransform.x2)), tankSprite.Height + 1 + (2 * TankCenter * Math.Abs(tankObject.GlobalTransform.y1 * tankObject.GlobalTransform.y2)), 0);
 
             tankObject.Update(deltaTime);
             lastTime = currentTime;
@@ -355,6 +365,7 @@ namespace TankGame
                 Bullet CloneBullet = bullet[x];
                 Bullet CloneBullet2 = bullet[x + 1];
                 CloneBullet.Transforms = CloneBullet2.Transforms;
+                CloneBullet.bulletSize = CloneBullet2.bulletSize;
                 CloneBullet.bulletLifeTime = CloneBullet2.bulletLifeTime;
                 bullet[x] = CloneBullet2;
                 x++;
@@ -382,12 +393,12 @@ namespace TankGame
             DrawText(ammo.ToString(), 50, GetScreenHeight() - 100, 100, Color.GREEN);
             for (int i = 0; i < AmmoPackCounter; i++)
             {
-                AmmoAABBHitBoxMin = new Calculations.Vector3(ammopack[i].location.z1, ammopack[i].location.z2, 0);
-                AmmoAABBHitBoxMax = new Calculations.Vector3(AmmoPack.width + 1 + (2 * AmmoPackCenter * Math.Abs(ammopack[i].location.x1 * ammopack[i].location.y1)), AmmoPack.height + 1 + (2 * AmmoPackCenter * Math.Abs(ammopack[i].location.x2 * ammopack[i].location.y2)), 0);
+                AmmoAABBHitBoxMin = new Calculations.Vector3(ammopack[i].location.x3, ammopack[i].location.y3, 0);
+                AmmoAABBHitBoxMax = new Calculations.Vector3(AmmoPack.width + 1 + (2 * AmmoPackCenter * Math.Abs(ammopack[i].location.x1 * ammopack[i].location.x2)), AmmoPack.height + 1 + (2 * AmmoPackCenter * Math.Abs(ammopack[i].location.y1 * ammopack[i].location.y2)), 0);
                 Calculations.Vector3 Tankmax = new Calculations.Vector3(TankAABBHitBoxMax.x + TankAABBHitBoxMin.x, TankAABBHitBoxMax.y + TankAABBHitBoxMin.y, 0);
                 Calculations.Vector3 Ammomax = new Calculations.Vector3(AmmoAABBHitBoxMax.x + AmmoAABBHitBoxMin.x, AmmoAABBHitBoxMax.y + AmmoAABBHitBoxMin.y, 0);
                 DrawRectangleLines((int)AmmoAABBHitBoxMin.x, (int)AmmoAABBHitBoxMin.y, (int)AmmoAABBHitBoxMax.x, (int)AmmoAABBHitBoxMax.y, Color.RED);
-                DrawTextureEx(AmmoPack, new Vector2(ammopack[i].location.z1, ammopack[i].location.z2), 0, 1f, Color.WHITE);
+                DrawTextureEx(AmmoPack, new Vector2(ammopack[i].location.x3, ammopack[i].location.y3), 0, 1f, Color.WHITE);
                 if (Tankmax.x > AmmoAABBHitBoxMin.x && TankAABBHitBoxMin.x < AmmoAABBHitBoxMin.x)
                 {
                     if (Tankmax.y > AmmoAABBHitBoxMin.y && TankAABBHitBoxMin.y < AmmoAABBHitBoxMin.y)
@@ -417,34 +428,40 @@ namespace TankGame
             }
             for (int i = 0; i < Targetcount; i++)
             {
-                DrawTextureEx(TargetText, new Vector2(target[i].location.z1, target[i].location.z2), 0, 1f, Color.WHITE);
+                DrawTextureEx(TargetText, new Vector2(target[i].location.x3, target[i].location.y3), 0, 1f, Color.WHITE);
             }
             for (int i = 0; i < BulletCount; i++)
             {
-                BulletAABBHitBoxMin = new Calculations.Vector3(bullet[i].Transforms.z1 - bulletText.width / 2 - (1 * Math.Abs(bullet[i].Transforms.x1 * bullet[i].Transforms.y1)), bullet[i].Transforms.z2 - bulletText.height / 2 - (1 * Math.Abs(bullet[i].Transforms.x2 * bullet[i].Transforms.y2)), 0);
-                BulletAABBHitBoxMax = new Calculations.Vector3(bulletText.width + 1 + (2 * 1 * Math.Abs(bullet[i].Transforms.x1 * bullet[i].Transforms.y1)), bulletText.height + 1 + (2 * 1 * Math.Abs(bullet[i].Transforms.x2 * bullet[i].Transforms.y2)), 0);
-                DrawRectangleLines((int)BulletAABBHitBoxMin.x, (int)BulletAABBHitBoxMin.y, (int)BulletAABBHitBoxMax.x, (int)BulletAABBHitBoxMax.y, Color.RED);
-                float rotation = (float)Math.Atan2(bullet[i].Transforms.x2, bullet[i].Transforms.x1);
-                Rectangle hitBox = new Rectangle(bullet[i].Transforms.z1, bullet[i].Transforms.z2, bulletText.width / 2, bulletText.height / 2);
-                DrawRectanglePro(hitBox, new Vector2(0, 0), (rotation * (float)(180.0f / Math.PI)) + 90, Color.RED);
-                DrawTextureEx(bulletText, new Vector2(bullet[i].Transforms.z1, bullet[i].Transforms.z2), (rotation * (float)(180.0f / Math.PI)) + 90, bullet[i].bulletSize, Color.RAYWHITE);
-                bullet[i].Transforms.z1 += bulletSpeed * bullet[i].Transforms.x1 * deltaTime;
-                bullet[i].Transforms.z2 += bulletSpeed * bullet[i].Transforms.x2 * deltaTime;
-                if (bullet[i].Transforms.z1 > GetScreenWidth())
+
+
+                float rotation = (float)Math.Atan2(bullet[i].Transforms.y1, bullet[i].Transforms.x1);
+                BulletAABBHitBoxMin = new Calculations.Vector3(bullet[i].Transforms.x3, bullet[i].Transforms.y3, 0);
+                BulletAABBHitBoxMax = new Calculations.Vector3(bullet[i].Transforms2.x3, bullet[i].Transforms2.y3, 0);
+                DrawLine((int)BulletAABBHitBoxMin.x, (int)BulletAABBHitBoxMin.y, (int)BulletAABBHitBoxMax.x, (int)BulletAABBHitBoxMax.y, Color.RED);
+                //Rectangle hitBox = new Rectangle(bullet[i].Transforms.x3, bullet[i].Transforms.y3, bulletText.width / 2, bulletText.height / 2);
+                //DrawRectanglePro(hitBox, new Vector2(0, 0), (rotation * (float)(180.0f / Math.PI)) + 90, Color.RED);
+                DrawTextureEx(bulletText, new Vector2(bullet[i].Transforms.x3 , bullet[i].Transforms.y3), (rotation * (float)(180.0f / Math.PI)) + 90, bullet[i].bulletSize, Color.RAYWHITE);
+
+                DrawRectangle((int)bullet[i].Transforms.x3,(int)bullet[i].Transforms.y3, 1,1, Color.BLUE);
+                bullet[i].Transforms.x3 += bulletSpeed * bullet[i].Transforms.x1 * deltaTime;
+                bullet[i].Transforms.y3 += bulletSpeed * bullet[i].Transforms.y1 * deltaTime;
+                bullet[i].Transforms2.x3 += bulletSpeed * bullet[i].Transforms2.x1 * deltaTime;
+                bullet[i].Transforms2.y3 += bulletSpeed * bullet[i].Transforms2.y1 * deltaTime;
+                if (bullet[i].Transforms.x3 > GetScreenWidth())
                 {
-                    bullet[i].Transforms.z1 = 0;
+                    bullet[i].Transforms.x3 = 0;
                 }
-                if (bullet[i].Transforms.z1 < -tankSprite.Width / 2.5)
+                if (bullet[i].Transforms.x3 < -tankSprite.Width / 2.5)
                 {
-                    bullet[i].Transforms.z1 = GetScreenWidth();
+                    bullet[i].Transforms.x3 = GetScreenWidth();
                 }
-                if (bullet[i].Transforms.z2 > GetScreenHeight())
+                if (bullet[i].Transforms.y3 > GetScreenHeight())
                 {
-                    bullet[i].Transforms.z2 = 0;
+                    bullet[i].Transforms.y3 = 0;
                 }
-                if (bullet[i].Transforms.z2 < -tankSprite.Height / 2.5)
+                if (bullet[i].Transforms.y3 < -tankSprite.Height / 2.5)
                 {
-                    bullet[i].Transforms.z2 = GetScreenHeight();
+                    bullet[i].Transforms.y3 = GetScreenHeight();
                 }
                 if (bullet[i].bulletLifeTime < 0)
                 {

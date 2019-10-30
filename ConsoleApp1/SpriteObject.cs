@@ -31,10 +31,10 @@ namespace TankGame
         public override void OnDraw()
         {
             float rotation = (float)Math.Atan2(
-            globalTransform.x2, globalTransform.x1);
+            globalTransform.y1, globalTransform.x1);
             DrawTextureEx(
             texture,
-            new Vector2(globalTransform.z1, globalTransform.z2),
+            new Vector2(globalTransform.x3, globalTransform.y3),
             rotation * (float)(180.0f / Math.PI),
             1, Color.WHITE);
         }
