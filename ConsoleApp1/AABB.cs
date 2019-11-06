@@ -57,7 +57,8 @@ namespace AABB
             {
                 min = Vector3.Min(min, p);
                 max = Vector3.Max(max, p);
-            }
+            }
+
         }
         public bool Overlaps(Vector3 p)
         {

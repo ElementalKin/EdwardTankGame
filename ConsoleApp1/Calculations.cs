@@ -246,7 +246,9 @@ namespace Calculations
         public static Vector3 Max(Vector3 a, Vector3 b)
         {
             return new Vector3(Math.Max(a.x, b.x), Math.Max(a.y, b.y), Math.Max(a.z, b.z));
-        }
+        }
+
+
     }
 
 }

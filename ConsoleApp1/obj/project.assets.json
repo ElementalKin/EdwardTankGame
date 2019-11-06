@@ -682,11 +682,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s199102\\source\\repos\\MatrixStuff\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "C:\\Users\\s199102\\source\\repos\\EdwardTankProject\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Users\\s199102\\source\\repos\\MatrixStuff\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectPath": "C:\\Users\\s199102\\source\\repos\\EdwardTankProject\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\s199102\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s199102\\source\\repos\\MatrixStuff\\ConsoleApp1\\obj\\",
+      "outputPath": "C:\\Users\\s199102\\source\\repos\\EdwardTankProject\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
